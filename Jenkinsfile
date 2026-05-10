@@ -31,10 +31,10 @@ pipeline {
             }
         }
 
-        stage('Deploy') { 
+        stage('Deploy') {
             steps {
-                // Note: You are running mvn clean package again here; 
-                // typically, you only need the ansible command if the build stage succeeded.
+                // This will print the exact name of the .war file in your logs
+                sh 'ls target/' 
                 sh 'ansible-playbook ansible/playbook.yml -i ansible/hosts.ini'
             }
         }
