@@ -1,9 +1,16 @@
--name: Deploy to Tomcat hosts: web
-become: yes tasks:
--name: Copy WAR file to Tomcat copy:
-src: "/var/snap/jenkins/5013/workspace/MavenAnsibleWebApp1- CICD/target/MavenAnsibleWebApp1.war"
-dest: "/opt/tomcat/webapps/MavenAnsibleWebApp1.war" remote_src: no
--name: Restart Tomcat shell: |
-/opt/tomcat/bin/shutdown.sh || true sleep 5
-/opt/tomcat/bin/startup.sh
+---
+- name: Deploy to Tomcat
+  hosts: web
+  become: yes
+  tasks:
+    - name: Copy WAR file to Tomcat
+      copy:
+        src: "/var/snap/jenkins/5013/workspace/MavenAnsibleWebApp1- CICD/target/MavenAnsibleWebApp1.war"
+        dest: "/opt/tomcat/webapps/MavenAnsibleWebApp1.war"
+        remote_src: no
 
+    - name: Restart Tomcat
+      shell: |
+        /opt/tomcat/bin/shutdown.sh || true
+        sleep 5
+        /opt/tomcat/bin/startup.sh
